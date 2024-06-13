@@ -1,5 +1,10 @@
 { lib, ... }:
 {
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+  };
+
   i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
 
   nix = {
