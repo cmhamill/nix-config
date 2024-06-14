@@ -15,7 +15,21 @@
     };
   };
 
-  outputs = inputs: {
+  outputs = inputs: let
+    forAllSystems = fn: inputs.nixpkgs.lib.genAttrs [
+      "aarch64-darwin"
+      "x86_64-linux"
+    ] (system: fn inputs.nixpkgs.legacyPackages.${system});
+  in {
+    apps = forAllSystems (pkgs: {
+      repl = {
+        type = "app";
+        program = "${pkgs.writeShellScript "flake-repl" ''
+          nix repl --expr '{ self = builtins.getFlake (toString ./.); }'
+        ''}";
+      };
+    });
+
     nixosConfigurations = {
       gw = inputs.nixpkgs.lib.nixosSystem {
         modules = [
