@@ -43,6 +43,7 @@
             ./nixos
             ./hosts/gw
             ./users/cmh
+            { home-manager.users.cmh.home.stateVersion = "24.05"; }
           ];
         };
       };
