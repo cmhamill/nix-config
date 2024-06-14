@@ -16,6 +16,7 @@
         "usb_storage"
         "xhci_pci"
       ];
+      systemd.enable = true;
     };
 
     kernelModules = [ ];
