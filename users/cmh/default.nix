@@ -8,6 +8,5 @@
       (lib.mkIf config.networking.networkmanager.enable "networkmanager")
       (lib.mkIf config.security.sudo.enable "wheel")
     ];
-
   };
 }

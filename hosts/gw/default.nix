@@ -25,6 +25,8 @@
 
   };
 
+  console.useXkbConfig = true;
+
   hardware = {
     cpu.intel.updateMicrocode = true;
     enableRedistributableFirmware = true;
@@ -37,11 +39,14 @@
 
   nixpkgs.hostPlatform = "x86_64-linux";
 
-  console.useXkbConfig = true;
-  services.xserver.xkb = {
-    layout = "us";
-    model = "pc104";
-    options = "lv3:ralt_alt,ctrl:nocaps,compose:prsc";
+  services = {
+    fwupd.enable = true;
+
+    xserver.xkb = {
+      layout = "us";
+      model = "pc104";
+      options = "lv3:ralt_alt,ctrl:nocaps,compose:prsc";
+    };
   };
 
   system.stateVersion = "24.05";
