@@ -4,6 +4,8 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
 
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -15,30 +17,34 @@
     };
   };
 
-  outputs = inputs: let
-    forAllSystems = fn: inputs.nixpkgs.lib.genAttrs [
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+    systems = [
       "aarch64-darwin"
       "x86_64-linux"
-    ] (system: fn inputs.nixpkgs.legacyPackages.${system});
-  in {
-    apps = forAllSystems (pkgs: {
-      repl = {
-        type = "app";
-        program = "${pkgs.writeShellScript "flake-repl" ''
-          nix repl --expr '{ self = builtins.getFlake (toString ./.); }'
-        ''}";
-      };
-    });
+    ];
 
-    nixosConfigurations = {
-      gw = inputs.nixpkgs.lib.nixosSystem {
-        modules = [
-          inputs.disko.nixosModules.disko
-          inputs.home-manager.nixosModules.home-manager
-          ./nixos
-          ./hosts/gw
-          ./users/cmh
-        ];
+    perSystem = { pkgs, ...}: {
+      apps = {
+        repl = {
+          type = "app";
+          program = "${pkgs.writeShellScript "flake-repl" ''
+            nix repl --expr '{ self = builtins.getFlake (toString ./.); }'
+          ''}";
+        };
+      };
+    };
+
+    flake = {
+      nixosConfigurations = {
+        gw = inputs.nixpkgs.lib.nixosSystem {
+          modules = [
+            inputs.disko.nixosModules.disko
+            inputs.home-manager.nixosModules.home-manager
+            ./nixos
+            ./hosts/gw
+            ./users/cmh
+          ];
+        };
       };
     };
   };
