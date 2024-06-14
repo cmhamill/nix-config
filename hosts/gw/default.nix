@@ -1,3 +1,5 @@
+{ config, lib, pkgs, ... }:
+
 {
   imports = [
     ./disko.nix
@@ -18,14 +20,24 @@
 
     kernelModules = [ ];
 
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/etc/secureboot";
+    };
+
     loader = {
       efi.canTouchEfiVariables = true;
-      systemd-boot.enable = true;
+      systemd-boot.enable = !config.boot.lanzaboote.enable;
     };
 
   };
 
   console.useXkbConfig = true;
+
+  environment.systemPackages = lib.mkIf config.boot.lanzaboote.enable [
+    pkgs.sbctl
+  ];
+
 
   hardware = {
     cpu.intel.updateMicrocode = true;

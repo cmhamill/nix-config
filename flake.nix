@@ -15,6 +15,12 @@
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } {
@@ -40,6 +46,7 @@
           modules = [
             inputs.disko.nixosModules.disko
             inputs.home-manager.nixosModules.home-manager
+            inputs.lanzaboote.nixosModules.lanzaboote
             ./nixos
             ./hosts/gw
             ./users/cmh
