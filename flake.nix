@@ -21,6 +21,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixos-hardware.url = "github:nixos/nixos-hardware";
   };
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } {
@@ -47,6 +48,8 @@
             inputs.disko.nixosModules.disko
             inputs.home-manager.nixosModules.home-manager
             inputs.lanzaboote.nixosModules.lanzaboote
+            inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-6th-gen
+
             ./nixos
             ./hosts/gw
             ./users/cmh
