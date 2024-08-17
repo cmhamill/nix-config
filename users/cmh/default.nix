@@ -9,4 +9,8 @@
       (lib.mkIf config.security.sudo.enable "wheel")
     ];
   };
+
+  home-manager.users.cmh = {
+    home.stateVersion = config.system.stateVersion;
+  };
 }
