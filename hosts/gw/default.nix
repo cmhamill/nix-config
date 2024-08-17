@@ -43,6 +43,7 @@
   hardware = {
     cpu.intel.updateMicrocode = true;
     enableRedistributableFirmware = true;
+    opengl.enable = true;
   };
 
   networking = {
