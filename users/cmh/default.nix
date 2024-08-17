@@ -13,6 +13,10 @@
   home-manager.users.cmh = {
     home.stateVersion = config.system.stateVersion;
 
+    programs.foot = {
+      enable = true;
+    };
+
     wayland.windowManager.sway = {
       enable = true;
       config = {
