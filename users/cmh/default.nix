@@ -12,5 +12,12 @@
 
   home-manager.users.cmh = {
     home.stateVersion = config.system.stateVersion;
+
+    wayland.windowManager.sway = {
+      enable = true;
+      config = {
+        modifier = "Mod4";
+      };
+    };
   };
 }
