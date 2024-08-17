@@ -13,8 +13,14 @@
   home-manager.users.cmh = {
     home.stateVersion = config.system.stateVersion;
 
-    programs.foot = {
-      enable = true;
+    programs = {
+      firefox = {
+        enable = true;
+      };
+
+      foot = {
+        enable = true;
+      };
     };
 
     wayland.windowManager.sway = {
