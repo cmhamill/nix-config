@@ -1,5 +1,7 @@
 { lib, ... }:
 {
+  fonts.enableDefaultPackages = true;
+
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
