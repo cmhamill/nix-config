@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 {
   users.users.cmh = {
     description = "C. Morgan Hamill";
@@ -9,9 +9,14 @@
       (lib.mkIf config.security.sudo.enable "wheel")
     ];
   };
-
   home-manager.users.cmh = {
-    home.stateVersion = config.system.stateVersion;
+    home = {
+      packages = with pkgs; [
+        discord
+      ];
+
+      stateVersion = config.system.stateVersion;
+    };
 
     programs = {
       firefox = {
@@ -21,7 +26,17 @@
       foot = {
         enable = true;
       };
+
+      git = {
+        enable = true;
+      };
+
+      neovim = {
+        enable = true;
+      };
     };
+
+    nixpkgs.config.allowUnfree = true;
 
     wayland.windowManager.sway = {
       enable = true;
